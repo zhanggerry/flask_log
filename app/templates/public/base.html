@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/site.css') }}" rel="stylesheet"></head>
+	<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/layui/layer.js')}}"></script>
+	
+	<body>
+    <div class="wrap">
+      <nav id="w0" class="navbar-inverse navbar-fixed-top navbar" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#w0-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index.php">My Company</a>
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			
+			{% for message in messages %}
+				<script>
+					layer.alert('{{message}}')
+				</script>
+			{% endfor %}
+			
+			{% endif %}
+			{% endwith %}
+		  </div>
+          <div id="w0-collapse" class="collapse navbar-collapse"></div>
+        </div>
+      </nav>
+	{% block content %}{% endblock %}

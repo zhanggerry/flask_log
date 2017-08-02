@@ -1,0 +1,111 @@
+
+{% extends "public/base.html" %}
+{% block content %}
+<style>
+	.thth100{
+		max-width: 200px;
+		overflow: hidden;
+		word-wrap:break-word
+	}
+	pre {
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+</style>
+<div class="container">
+
+	
+    <form style="display: inline;" action="{{url_for('list_log')}}" method="get" name="search">
+		<input name="limit_num" placeholder="查询条数" value={{limit_num}}><!--限制条数-->
+		<input name="id" placeholder="查询编号" value={{id}}><!--查询编号-->
+		<input type="submit" value="Search">
+	</form>
+
+
+	<div class="row clearfix">
+		<div class="col-md-12 column" style="    overflow: hidden;">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							编号
+						</th>
+						<th style="width:150px;">
+							请求路径
+						</th>
+						<th style="width:150px;">
+							请求参数
+						</th>
+						<th style="width:150px;">
+							返回参数
+						</th>
+						<th style="width:150px;">
+							创建时间
+						</th>
+						<th style="width:150px;">
+							详细报文信息
+						</th>
+						<th style="width:150px;">
+							ip
+						</th>
+						<th style="width:150px;">
+							设备
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in list %}
+					<tr>
+						<td class="thth100">
+							{{i[0]}}
+						</td>
+						<td class="thth100">
+							{{i[1]}}
+						</td>
+						<td class="thth100">
+							<span onclick="displayContent({{i[0]}},2)"><textarea style="height: 200px;">{{i[2]}}</textarea></span>
+						</td>
+						<td class="thth100">
+							<span onclick="displayContent({{i[0]}},3)"><textarea style="height: 200px;">{{i[3]}}</textarea></span>
+						</td>
+						<td class="thth100">
+							{{i[4]}}
+						</td>
+						<td class="thth100">
+							<span onclick="displayContent({{i[0]}},5)"><textarea style="height: 200px;">{{i[5]}}</textarea></span>
+						</td>
+						<td class="thth100">
+							{{i[6]}}
+						</td>
+						<td class="thth100">
+							{{i[7]}}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% if previous %}
+			<a href="{{url_for('list_log',today_num = previous)}}">上一页</a>
+		{% endif %}
+
+		{% if next %}
+			<a href="{{url_for('list_log',today_num = next)}}">下一页</a>
+		{% endif %}
+	</div>
+</div>
+<script>
+	
+	function displayContent(id, type){
+		layer.open({
+		  type: 2,
+		  title: false,
+		  closeBtn: 0,
+		  shadeClose: true,
+		  skin: 'yourclass',
+          area: ['630px', '360px'],
+		  content: "{{url_for('list_log_display')}}?log_id="+id+"&type="+type+""
+		});
+	}
+</script>
+{% endblock %}

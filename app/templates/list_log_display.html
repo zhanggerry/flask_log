@@ -1,0 +1,27 @@
+{% block content %}
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js')}}"></script>
+<style>
+	pre {
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+</style>
+<div class="container">
+	<pre>{{accept_list[type]}}</pre>
+</div>
+
+<script>
+	{% if type == 2 or type == 3 %}
+		window.onload = function (){
+			var $text = $('.container pre').text();
+			$text = unicode2Chr($text);
+			$('.container pre').text($text);
+		}
+
+		function unicode2Chr(str) {
+			return unescape(str.replace(/\\/g, "%"))
+		}
+	{% endif %}
+</script>
+{% endblock %}
